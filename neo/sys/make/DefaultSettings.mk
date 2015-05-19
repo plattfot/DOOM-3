@@ -1,0 +1,29 @@
+# Default settings -------------------------------
+
+
+CC = gcc
+CXX = g++
+JOBS = 1
+BUILD = debug
+DEDICATED = 0
+TARGET_CORE = 1
+TARGET_GAME = 1
+TARGET_D3XP = 1
+TARGET_MONO = 0
+TARGET_DEMO = 0
+IDNET_HOST = 
+GL_HARDLINK = 0
+DEBUG_MEMORY = 0
+LIBC_MALLOC = 1
+ID_NOLANADDRESS = 0
+ID_MCHECK = 2
+BUILD_ROOT = private
+ALSA = 1
+SETUP = 0
+SDK = 0
+NOCONF = 0
+NOCURL = 0
+BUILD_GAMEPAK = 0
+BASEFLAGS = 
+SILENT = 0
+
