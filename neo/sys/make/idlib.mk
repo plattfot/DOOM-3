@@ -48,7 +48,21 @@ idlib_src_path := neo/idlib
 
 # Create obj files, these will be created in the build_path but will
 # keep the structure.
-idlib_obj_files = $(idlib_src_files:%.cpp=$(build_path)/$(idlib_src_path)/%.o)
+idlib_obj_files := $(idlib_src_files:%.cpp=$(build_path)/$(idlib_src_path)/%.o)
 
 # Max allowed -O1. Why?
 idlib_cppflags = $(BASECPPFLAGS) $(DEPENDCPPFLAGS) $(CORECPPFLAGS) $(patsubst -O3,-O1,$(OPTCPPFLAGS))
+
+idlib_dirs := $(sort $(dir $(idlib_obj_files)))
+ifeq ($(IDLIB_STATIC),1)
+
+idlib_name := libidlib.a
+idlib_linker := ar -qc
+
+else
+
+idlib_name := libidlib.so
+idlib_cppflags += fPIC
+idlib_linker = $(CXX) -o
+
+endif

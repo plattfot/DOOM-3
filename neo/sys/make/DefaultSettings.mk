@@ -1,6 +1,6 @@
 # Default settings -------------------------------
 
-
+NAME = doom3
 CC = gcc
 CXX = g++
 JOBS = 1
@@ -26,4 +26,4 @@ NOCURL = 0
 BUILD_GAMEPAK = 0
 BASEFLAGS = 
 SILENT = 0
-
+IDLIB_STATIC = 0

@@ -31,6 +31,9 @@ endif
 # Process the options and define the correct flags
 include $(SYS_MAKE_PATH)/ProcessOptions.mk
 
+# Include template for building each module
+include $(SYS_MAKE_PATH)/Template.mk
+
 # Include the different modules of Doom 3 
 modules = idlib 
 
@@ -42,26 +45,26 @@ RELEASECPPFLAGS += -fno-unsafe-math-optimizations -fomit-frame-pointer
 
 DEBUGCPPFLAGS := -g -O1 -D_DEBUG
 
+TYPES := release debug
+
+TYPE_PATHS := $(prefix $(BUILD_ROOT),$(TYPES))
 
 .PHONY: build
 build: OPTCPPFLAGS = $(RELEASECPPFLAGS)
+build: TYPE = release
 build: $(modules)
 
 .PHONY: debug
 debug: OPTCPPFLAGS = $(DEBUGCPPFLAGS)
+debug: TYPE = debug
 debug: $(modules)
-
-$(sort $(dir $(idlib_obj_files))):
-	mkdir -p $@
-
-.PHONY: idlib 
-idlib: CPPFLAGS = $(idlib_cppflags)
-idlib: $(sort $(dir $(idlib_obj_files))) $(idlib_obj_files) 
-	$(CXX) $< -o $@
-
-$(build_path)/%.o: %.cpp
-	$(CXX) $(CPPFLAGS) -c $< -o $@
 
 .PHONY: clean
 clean: 
 	rm -rf $(BUILD_ROOT)
+
+$(build_path)/%.o: %.cpp
+	$(CXX) $(CPPFLAGS) -c $< -o $@
+
+# Create build targets for each module based on the template
+$(foreach module,$(modules),$(eval $(call __build_module,$(module))))
