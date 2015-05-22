@@ -62,7 +62,7 @@ idlib_linker := ar -qc
 else
 
 idlib_name := libidlib.so
-idlib_cppflags += fPIC
+idlib_cppflags += -fPIC
 idlib_linker = $(CXX) -o
 
 endif

@@ -8,7 +8,7 @@ OS := `uname -o`
 
 BASECPPFLAGS = -pipe
 # Warnings
-BASECPPFLAGS += -Wall -Wno-unknown-pragmas
+BASECPPFLAGS += -Wall -Wno-unknown-pragmas  -fdiagnostics-color=always
 
 # Build for 32 bit
 BASECPPFLAGS += -m32
@@ -35,7 +35,7 @@ include $(SYS_MAKE_PATH)/ProcessOptions.mk
 include $(SYS_MAKE_PATH)/Template.mk
 
 # Include the different modules of Doom 3 
-modules = idlib 
+modules = idlib core
 
 # Include the logic for each module, i.e src files and flags
 $(foreach module,$(modules),$(eval include $$(SYS_MAKE_PATH)/$(module).mk))
@@ -65,6 +65,9 @@ clean:
 
 $(build_path)/%.o: %.cpp
 	$(CXX) $(CPPFLAGS) -c $< -o $@
+
+$(build_path)/%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 # Create build targets for each module based on the template
 $(foreach module,$(modules),$(eval $(call __build_module,$(module))))
